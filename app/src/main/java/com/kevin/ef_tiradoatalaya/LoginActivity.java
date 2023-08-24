@@ -62,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
             }
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                validateCredentials();
+                validateInputs();
             }
             @Override
             public void afterTextChanged(Editable s) {
@@ -75,7 +75,7 @@ public class LoginActivity extends AppCompatActivity {
             }
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                validateCredentials();
+                validateInputs();
             }
             @Override
             public void afterTextChanged(Editable s) {
@@ -83,16 +83,13 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void validateCredentials() {
+    private void validateInputs() {
         String email = binding.tilEmail.getEditText().getText().toString();
         String password = binding.tilPassword.getEditText().getText().toString();
-        Boolean isOk = isCredentialsValid(email, password);
-        binding.btnLogin.setEnabled(isOk);
-    }
 
-    private Boolean isCredentialsValid(String email, String password) {
-        Boolean isEmailValid = !TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches();
-        Boolean isPasswordValid = password.equals("Peru123.");
-        return isEmailValid && isPasswordValid;
+        boolean isValidEmail = Patterns.EMAIL_ADDRESS.matcher(email).matches();
+        boolean isValidPassword = password.matches("^(?=.*[0-9])(?=.*[a-zA-Z]).{8,}$");
+
+        binding.btnLogin.setEnabled(isValidEmail && isValidPassword);
     }
 }
