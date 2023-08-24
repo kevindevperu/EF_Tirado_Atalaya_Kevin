@@ -1,5 +1,6 @@
 package com.kevin.ef_tiradoatalaya.data.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.kevin.ef_tiradoatalaya.DetalleActivity;
 import com.kevin.ef_tiradoatalaya.data.model.Titan;
 import com.kevin.ef_tiradoatalaya.data.retrofit.RVTitanAdapter;
 import com.kevin.ef_tiradoatalaya.data.retrofit.RetrofitHelper;
@@ -31,7 +33,16 @@ public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
     private RecyclerView recyclerView;
     private RVTitanAdapter rvTitanAdapter;
-    private List<Titan> titansList = new ArrayList<>(); // Crear una lista para los titanes
+    private List<Titan> titansList = new ArrayList<>();
+
+    private RVTitanAdapter.OnItemClickListener onItemClickListener = new RVTitanAdapter.OnItemClickListener() {
+        @Override
+        public void onItemClick(int position) {
+            // Aquí puedes abrir la actividad de detalles
+            Intent intent = new Intent(getActivity(), DetalleActivity.class);
+            startActivity(intent);
+        }
+    };
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,7 +58,6 @@ public class HomeFragment extends Fragment {
         recyclerView = binding.rvTitans;
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
-        // Obtener la instancia de TitansInterface de RetrofitHelper
         TitansInterface titansInterface = RetrofitHelper.getInstance().create(TitansInterface.class);
 
         Call <TitanResponse> call = titansInterface.getListTitan();
@@ -62,7 +72,7 @@ public class HomeFragment extends Fragment {
                     Log.d("API Response", "Titan count: " + titansList.size());
 
                     // Configura el RecyclerView con los datos
-                    rvTitanAdapter = new RVTitanAdapter(titansList);
+                    rvTitanAdapter = new RVTitanAdapter(titansList, onItemClickListener);
                     recyclerView.setAdapter(rvTitanAdapter);
                 } else {
                     Log.e("API Response Error", "Response code: " + response.code());

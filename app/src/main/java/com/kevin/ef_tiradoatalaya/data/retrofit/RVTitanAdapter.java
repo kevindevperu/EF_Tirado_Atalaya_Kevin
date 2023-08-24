@@ -2,7 +2,9 @@ package com.kevin.ef_tiradoatalaya.data.retrofit;
 
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,8 +19,15 @@ public class RVTitanAdapter extends RecyclerView.Adapter<RVTitanAdapter.ShowView
 
     private List<Titan> titans;
 
-    public RVTitanAdapter(List<Titan> titans){
+    private OnItemClickListener listener;
+
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    public RVTitanAdapter(List<Titan> titans, OnItemClickListener listener) {
         this.titans = titans;
+        this.listener = listener;
     }
 
 
@@ -31,7 +40,7 @@ public class RVTitanAdapter extends RecyclerView.Adapter<RVTitanAdapter.ShowView
 
     @Override
     public void onBindViewHolder(@NonNull RVTitanAdapter.ShowViewHolder holder, int position) {
-        holder.bind(titans.get(position));
+        holder.bind(titans.get(position), listener);
     }
 
     @Override
@@ -46,11 +55,24 @@ public class RVTitanAdapter extends RecyclerView.Adapter<RVTitanAdapter.ShowView
             this.binding = binding;
         }
 
-        public void bind(Titan titan) {
+        public void bind(Titan titan, OnItemClickListener listener) {
             binding.txtName.setText(titan.getName());
-            String abilitiesText = TextUtils.join(", ", titan.getAbilities()); // Concatena las habilidades con una coma y espacio
+            String abilitiesText = TextUtils.join(", ", titan.getAbilities());
             binding.txtAbilities.setText(abilitiesText);
             Glide.with(itemView.getContext()).load(titan.getImg()).into(binding.imgView);
+
+            // Configura el OnClickListener en la tarjeta
+            binding.cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onItemClick(position);
+                        }
+                    }
+                }
+            });
         }
     }
 }
