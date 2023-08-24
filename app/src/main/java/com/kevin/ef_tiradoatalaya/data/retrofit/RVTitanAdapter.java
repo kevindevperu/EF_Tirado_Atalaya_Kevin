@@ -1,6 +1,7 @@
 package com.kevin.ef_tiradoatalaya.data.retrofit;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,10 @@ import com.kevin.ef_tiradoatalaya.data.model.Titan;
 import com.kevin.ef_tiradoatalaya.databinding.ItemTitanBinding;
 
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RVTitanAdapter extends RecyclerView.Adapter<RVTitanAdapter.ShowViewHolder> {
 
@@ -69,6 +74,34 @@ public class RVTitanAdapter extends RecyclerView.Adapter<RVTitanAdapter.ShowView
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
                             listener.onItemClick(position);
+
+                            // Obtiene el ID del titán seleccionado
+                            int titanId = titans.get(position).getId();
+
+                            // Realiza una solicitud adicional para obtener detalles del titán por su ID
+                            TitansInterface titansInterface = RetrofitHelper.getInstance().create(TitansInterface.class);
+                            Call<Titan> titanCall = titansInterface.getTitanById(titanId);
+                            titanCall.enqueue(new Callback<Titan>() {
+                                @Override
+                                public void onResponse(Call<Titan> call, Response<Titan> response) {
+                                    if (response.isSuccessful() && response.body() != null) {
+                                        Titan selectedTitan = response.body();
+                                        // Aquí puedes trabajar con el titán seleccionado y sus detalles
+                                        Log.d("Selected Titan", "ID: " + selectedTitan.getId());
+                                        Log.d("Selected Titan", "Name: " + selectedTitan.getName());
+                                        // ... Continúa con el manejo de los detalles
+                                    } else {
+                                        Log.e("API Response Error", "Response code: " + response.code());
+                                        // Manejar la respuesta de error de la API
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<Titan> call, Throwable t) {
+                                    // Manejar el fallo de la llamada a la API
+                                    Log.e("API Error", "Error en la solicitud a la API: " + t.getMessage());
+                                }
+                            });
                         }
                     }
                 }

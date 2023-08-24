@@ -15,6 +15,8 @@
         android:theme="?attr/actionBarTheme"
         tools:ignore="MissingConstraints" />
 
+
+
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/listTitanDetalle"
         android:layout_width="0dp"
