@@ -1,0 +1,67 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".DetalleActivity">
+
+    <!-- ImageView para mostrar la imagen -->
+    <ImageView
+        android:id="@+id/imgTitan"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_launcher_foreground"
+        android:layout_centerHorizontal="true"/>
+
+    <!-- TextViews para mostrar datos relevantes -->
+    <TextView
+        android:id="@+id/txtNames"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imgTitan"
+        android:layout_marginTop="16dp"
+        android:text="Nombre: "
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/txtHeight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtNames"
+        android:layout_marginTop="8dp"
+        android:text="Altura: "
+        android:textSize="16sp"/>
+
+
+    <TextView
+        android:id="@+id/txtAllegiance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtHeight"
+        android:layout_marginTop="8dp"
+        android:text="Lealtad: "
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/txtAbilitiess"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtAllegiance"
+        android:layout_marginTop="8dp"
+        android:text="Habilidad: "
+        android:textSize="16sp"/>
+
+
+    <Button
+        android:id="@+id/favoriteButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtAbilitiess"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="Agregar a Favoritos"
+        android:textSize="16sp"/>
+
+</RelativeLayout>
