@@ -47,7 +47,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.favorite) {
-            Snackbar.make(binding.getRoot(), "Favorite", Snackbar.LENGTH_SHORT).show();
+            Intent favoriteIntent = new Intent(this, FavoriteActivity.class);
+            startActivity(favoriteIntent);
             return true;
         } else if (item.getItemId() == R.id.logout) {
             showDialog();
