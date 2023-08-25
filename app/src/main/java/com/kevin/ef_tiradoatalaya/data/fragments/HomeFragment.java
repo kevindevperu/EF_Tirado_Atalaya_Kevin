@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -39,6 +40,9 @@ public class HomeFragment extends Fragment {
     private RecyclerView recyclerView;
     private RVTitanAdapter rvTitanAdapter;
     private List<Titan> titansList = new ArrayList<>();
+
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -83,6 +87,8 @@ public class HomeFragment extends Fragment {
             }
         });
     }
+
+
 
     // Mueve este método fuera del onItemClickListener
     public void displayTitanDetails(Titan titan) {

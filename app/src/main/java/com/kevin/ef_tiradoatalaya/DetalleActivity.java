@@ -7,7 +7,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
+import com.kevin.ef_tiradoatalaya.data.db.TitansRepository;
 import com.kevin.ef_tiradoatalaya.data.fragments.DetalleFragment;
 import com.kevin.ef_tiradoatalaya.data.fragments.HomeFragment;
 import com.kevin.ef_tiradoatalaya.data.model.Titan;
@@ -24,12 +28,12 @@ import retrofit2.Response;
 
 public class DetalleActivity extends AppCompatActivity {
 
+
     private ActivityDetalleBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         // Infla la vista de la actividad desde activity_detalle.xml
         binding = ActivityDetalleBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());

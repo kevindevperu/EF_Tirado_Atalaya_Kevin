@@ -22,6 +22,7 @@ import retrofit2.Response;
 
 public class RVTitanAdapter extends RecyclerView.Adapter<RVTitanAdapter.ShowViewHolder> {
 
+
     private List<Titan> titans;
 
     private OnItemClickListener listener;
@@ -29,6 +30,8 @@ public class RVTitanAdapter extends RecyclerView.Adapter<RVTitanAdapter.ShowView
     public interface OnItemClickListener {
         void onItemClick(int position);
     }
+
+
 
     public RVTitanAdapter(List<Titan> titans, OnItemClickListener listener) {
         this.titans = titans;
@@ -42,6 +45,7 @@ public class RVTitanAdapter extends RecyclerView.Adapter<RVTitanAdapter.ShowView
         ItemTitanBinding binding = ItemTitanBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new ShowViewHolder(binding);
     }
+    
 
     @Override
     public void onBindViewHolder(@NonNull RVTitanAdapter.ShowViewHolder holder, int position) {
@@ -55,6 +59,7 @@ public class RVTitanAdapter extends RecyclerView.Adapter<RVTitanAdapter.ShowView
 
     public class ShowViewHolder extends RecyclerView.ViewHolder {
         private ItemTitanBinding binding;
+
         public ShowViewHolder(@NonNull ItemTitanBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
@@ -64,7 +69,9 @@ public class RVTitanAdapter extends RecyclerView.Adapter<RVTitanAdapter.ShowView
             binding.txtName.setText(titan.getName());
             String abilitiesText = TextUtils.join(", ", titan.getAbilities());
             binding.txtAbilities.setText(abilitiesText);
+
             Glide.with(itemView.getContext()).load(titan.getImg()).into(binding.imgView);
+
 
             // Configura el OnClickListener en la tarjeta
             binding.cardView.setOnClickListener(new View.OnClickListener() {
@@ -74,6 +81,7 @@ public class RVTitanAdapter extends RecyclerView.Adapter<RVTitanAdapter.ShowView
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
                             listener.onItemClick(position);
+
 
                             // Obtiene el ID del titán seleccionado
                             int titanId = titans.get(position).getId();
@@ -89,7 +97,6 @@ public class RVTitanAdapter extends RecyclerView.Adapter<RVTitanAdapter.ShowView
                                         // Aquí puedes trabajar con el titán seleccionado y sus detalles
                                         Log.d("Selected Titan", "ID: " + selectedTitan.getId());
                                         Log.d("Selected Titan", "Name: " + selectedTitan.getName());
-                                        // ... Continúa con el manejo de los detalles
                                     } else {
                                         Log.e("API Response Error", "Response code: " + response.code());
                                         // Manejar la respuesta de error de la API
@@ -108,4 +115,5 @@ public class RVTitanAdapter extends RecyclerView.Adapter<RVTitanAdapter.ShowView
             });
         }
     }
+
 }
