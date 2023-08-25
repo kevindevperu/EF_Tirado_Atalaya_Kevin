@@ -61,6 +61,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="56dp"
         android:text="Agregar a Favoritos"
+        android:layout_marginTop="7dp"
         android:layout_below="@id/txtAbilitiess"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
