@@ -40,21 +40,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         binding.btnLogin.setEnabled(false);
-        binding.btnLogin.setOnClickListener(v -> {
-            sharedPreferences.edit().putBoolean(SESSION_ACTIVATED, true).apply();
 
-            String email = binding.tilEmail.getEditText().getText().toString();
-            String password = binding.tilPassword.getEditText().getText().toString();
-
-            if (email.equals("ejemploe@idat.com.pe") && password.equals("Peru123.")) {
-                Intent intent = new Intent(this, MainActivity.class);
-                intent.putExtra(MainActivity.EMAIL, binding.tilEmail.getEditText().getText().toString());
-                startActivity(intent);
-                finish();
-            } else {
-                Toast.makeText(this, "Datos incorrectos", Toast.LENGTH_SHORT).show();
-            }
-        });
 
         binding.tilEmail.getEditText().addTextChangedListener(new TextWatcher() {
             @Override
@@ -62,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
             }
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                validateCredentials();
+                validateInputs();
             }
             @Override
             public void afterTextChanged(Editable s) {
@@ -75,15 +61,29 @@ public class LoginActivity extends AppCompatActivity {
             }
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                validateCredentials();
+                validateInputs();
             }
             @Override
             public void afterTextChanged(Editable s) {
             }
         });
+
+        binding.btnLogin.setOnClickListener(v -> {
+            sharedPreferences.edit().putBoolean(SESSION_ACTIVATED, true).apply();
+
+            String email = binding.tilEmail.getEditText().getText().toString();
+            String password = binding.tilPassword.getEditText().getText().toString();
+
+            if (email.equals("ejemploe@idat.com.pe") && password.equals("Peru123.")) {
+                Intent intent = new Intent(this, MainActivity.class);
+                intent.putExtra(MainActivity.EMAIL, binding.tilEmail.getEditText().getText().toString());
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
-    private void validateCredentials() {
+    private void validateInputs() {
         String email = binding.tilEmail.getEditText().getText().toString();
         String password = binding.tilPassword.getEditText().getText().toString();
         Boolean isOk = isCredentialsValid(email, password);

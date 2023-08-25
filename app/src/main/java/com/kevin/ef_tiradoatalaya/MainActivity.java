@@ -51,36 +51,33 @@ public class MainActivity extends AppCompatActivity {
             startActivity(favoriteIntent);
             return true;
         } else if (item.getItemId() == R.id.logout) {
-            showDialog();
+            showLogoutConfirmationDialog();
             return true;
         }
         return false;
     }
 
-    private void showDialog() {
+    private void showLogoutConfirmationDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Cerrar Sesión");
-        builder.setMessage("¿Estás seguro de que deseas cerrar sesión?");
-        builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                logout();
-            }
-        });
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        builder.show();
+        builder.setMessage("¿Desea cerrar la sesión?")
+                .setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // Limpiar las preferencias compartidas y redirigir al usuario al login
+                        sharedPreferences.edit().clear().apply();
+                        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // Cierra el diálogo
+                        dialog.dismiss();
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
-    private void logout() {
-        sharedPreferences.edit().clear().apply();
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
-        finish();
-    }
 
 }

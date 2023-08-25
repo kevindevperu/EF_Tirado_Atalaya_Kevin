@@ -43,11 +43,13 @@
                     android:id="@+id/txtName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/black"
                     android:text="Name Titans"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/txtAbilities"
+                    android:textColor="@color/black"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Abilities with a long text that should wrap to the next line if it's too long." />
